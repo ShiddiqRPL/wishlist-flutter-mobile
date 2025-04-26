@@ -25,7 +25,7 @@ class WishlistScreen extends StatefulWidget {
 }
 
 class _WishlistScreenState extends State<WishlistScreen> {
-  List<String> _wishlist = [];
+  List<WishlistItem> _wishlist = [];
 
   @override
   void initState() {
@@ -37,15 +37,17 @@ class _WishlistScreenState extends State<WishlistScreen> {
     final prefs = await SharedPreferences.getInstance();
     final String? wishlistJson = prefs.getString('wishlist');
     if (wishlistJson != null) {
+      final List<dynamic> decoded = json.decode(wishlistJson);
       setState(() {
-        _wishlist = List<String>.from(json.decode(wishlistJson));
+        _wishlist = decoded.map((item) => WishlistItem.fromMap(item)).toList();
       });
     }
   }
 
   void _saveWishlist() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('wishlist', json.encode(_wishlist));
+    final List<Map<String, dynamic>> mappedWishlist = _wishlist.map((item) => item.toMap()).toList();
+    await prefs.setString('wishlist', json.encode(mappedWishlist));
   }
 
   void _showAddItemDialog() {
@@ -69,8 +71,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                final newItem = _controller.text;
-                if (newItem.isNotEmpty) {
+                final newItemText = _controller.text;
+                if (newItemText.isNotEmpty) {
+                  final newItem = WishlistItem(title: newItemText);
                   setState(() {
                     _wishlist.add(newItem);
                     _saveWishlist();
@@ -94,7 +97,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
         itemCount: _wishlist.length,
         itemBuilder: (context, index) {
           return Dismissible(
-            key: Key(_wishlist[index]),
+            key: Key(item.title),
             direction: DismissDirection.endToStart,
             background: Container(
               color: Colors.red,
@@ -113,7 +116,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
               );
             },
             child: ListTile(
-              title: Text(_wishlist[index]),
+              title: Text(item.title),
+              subtitle: item.dueDate != null
+                ? Text('Due: ${item.dueDate!.toLocal().toString().split(' ')[0]}')
+                : null,
               onLongPress: () {
                 setState(() {
                   _wishlist.removeAt(index);
