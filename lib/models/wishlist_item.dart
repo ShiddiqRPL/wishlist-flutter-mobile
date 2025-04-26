@@ -13,7 +13,6 @@ class WishlistItem {
     this.isDone = false,
   });
 
-  // Convert WishlistItem to Map (for JSON serialization)
   Map<String, dynamic> toMap() {
     return {
       'title': title,
@@ -23,7 +22,6 @@ class WishlistItem {
     };
   }
 
-  // Create WishlistItem from Map (for JSON deserialization)
   factory WishlistItem.fromMap(Map<String, dynamic> map) {
     return WishlistItem(
       title: map['title'] ?? '',
@@ -33,7 +31,6 @@ class WishlistItem {
     );
   }
 
-  // Helper for JSON
   String toJson() => json.encode(toMap());
 
   factory WishlistItem.fromJson(String source) =>
