@@ -1,16 +1,40 @@
-# my_app
+# 📱 Wishlist Flutter Mobile
 
-A new Flutter project.
+A simple mobile app built with **Flutter** to manage your personal wishlist, organized by urgency and deadlines.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✨ Features
 
-A few resources to get you started if this is your first Flutter project:
+- Add new wishlist items.
+- Organize items by **categories** like:
+  - This Week
+  - Next Week
+  - This Month
+  - Next Month
+  - This Year
+  - Next Year
+  - Specific Date
+- Mark items as **Done**.
+- Postpone items to a later date or different category.
+- Overview screen showing items due soon (this week, next week, this month).
+- Full wishlist screen with **search** and **filter** options.
+- Persistent storage using `shared_preferences` — your data is saved even when you close the app.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Getting Started
+
+```bash
+# Make sure you have Flutter installed
+flutter --version
+
+# Clone this repository
+git clone https://github.com/ShiddiqRPL/wishlist-flutter-mobile.git
+cd wishlist-flutter-mobile
+
+# Get all Flutter dependencies
+flutter pub get
+
+# Run the app
+flutter run
