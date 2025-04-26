@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  flutter:
+    image: ghcr.io/cirruslabs/flutter:3.32.0-0.1.pre
+    container_name: flutter-dev
+    volumes:
+      - .:/app
+      - flutter_pub_cache:/flutter/.pub-cache
+      - flutter_cache:/root/.cache/flutter  # Cache Flutter tools
+      - /dev/bus/usb:/dev/bus/usb
+    working_dir: /app
+    command: bash
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+    devices:
+      - /dev/bus/usb:/dev/bus/usb  # Enables Android phone USB access
+    privileged: true               # Needed for accessing USB devices
+    network_mode: host             # Needed for adb to detect devices on host
+    stdin_open: true
+
+volumes:
+  flutter_pub_cache:
+  flutter_cache: 
+
